@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jordan Boyd — Filmmaker / Director / Producer</title>
+<meta name="description" content="Jordan Boyd — filmmaker, director, producer. Selected work.">
+<meta name="theme-color" content="#F5EFE6">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://jorboyd.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jorboyd.github.io/">
+<meta property="og:title" content="Jordan Boyd — Filmmaker / Director / Producer">
+<meta property="og:description" content="Narrative, brand films, and the in-between. I tell stories about the little bits of life worth telling.">
+<meta property="og:image" content="https://jorboyd.github.io/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   DIRECTION A — "THE MARQUEE"  ·  palette: LINEN
+   Story: a matinee house with the lobby lights up — warm ivory walls,
+   ink on the bill, one clean stroke of Carolina blue as the marquee.
+   Palette: linen #F5EFE6 ground / warm-charcoal #2B2723 ink /
+   Carolina blue #4B9CD3 as the single accent — the true UNC hue
+   for type, rules, bulbs & fills. Purest: base + ink + blue.
+   ===================================================================== */
+:root{
+  --base:#F5EFE6; --panel:#EBE0CF;
+  --ink:#2B2723; --mut:#6E6459;
+  --blue:#4B9CD3; --blue-ink:#4B9CD3;
+  --scrim:#17110B; --onimg:#F7EFE4; --onimg2:#A9D0EC;
+  --line:color-mix(in srgb, var(--ink) 15%, transparent);
+  --disp:'Instrument Serif', serif;
+  --sys:'DM Mono', monospace;
+  --ez:cubic-bezier(.22,.61,.36,1);
+  --gutter:clamp(18px,4.5vw,72px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--base);color:var(--ink);font-family:var(--sys);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+::selection{background:color-mix(in srgb, var(--blue) 26%, transparent)}
+.shell{max-width:1560px;margin:0 auto;padding:0 var(--gutter)}
+
+/* faint warm vignette to ground the page — no colored glow */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:linear-gradient(180deg,transparent 60%,color-mix(in srgb, var(--ink) 5%, transparent));}
+main,header,footer{position:relative;z-index:1}
+
+/* ============ TOP BAR ============ */
+.bar{display:flex;justify-content:space-between;align-items:center;gap:18px;
+  padding:22px 0 18px;border-bottom:1px solid var(--line)}
+.wm{font-family:var(--disp);font-size:clamp(20px,2vw,26px);letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.wm em{font-style:normal;color:var(--blue-ink)}
+.role{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--mut)}
+.bar a.contact{font-family:var(--disp);text-transform:uppercase;letter-spacing:.02em;line-height:1;
+  font-size:clamp(20px,2vw,26px);color:var(--blue-ink);transition:color .3s var(--ez)}
+.bar a.contact:hover{color:var(--ink)}
+
+/* ============ MARQUEE TICKER (the bill) ============ */
+.ticker{border-bottom:1px solid var(--line);overflow:hidden;background:
+  linear-gradient(180deg,color-mix(in srgb, var(--panel) 65%, transparent),transparent)}
+.ticker-in{display:flex;align-items:center;gap:0;width:max-content;
+  padding:14px 0;animation:tick 38s linear infinite;will-change:transform}
+.ticker:hover .ticker-in{animation-play-state:paused}
+.ticker .t{font-family:var(--disp);font-size:clamp(18px,2.2vw,30px);text-transform:uppercase;
+  letter-spacing:.02em;line-height:1;white-space:nowrap;padding:0 clamp(18px,2.2vw,34px);color:var(--ink)}
+.ticker .bulb{width:9px;height:9px;border-radius:50%;background:var(--blue);
+  border:1px solid color-mix(in srgb, var(--ink) 28%, transparent);box-shadow:0 1px 2px color-mix(in srgb, var(--ink) 22%, transparent);flex:none}
+.ticker .t:nth-child(6n+2){color:var(--blue-ink)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ============ HERO FILMSTRIP ============ */
+.now{display:flex;align-items:baseline;gap:16px;padding:26px 0 16px}
+.now b{font-family:var(--disp);text-transform:lowercase;letter-spacing:.04em;
+  font-size:clamp(13px,1.3vw,17px);color:var(--blue-ink)}
+.now span{font-size:11px;letter-spacing:.24em;text-transform:lowercase;color:var(--mut)}
+.strip{overflow:hidden;padding-bottom:8px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.strip-in{display:flex;gap:14px;width:max-content;animation:slide 60s linear infinite;will-change:transform}
+.strip:hover .strip-in{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-50%)}}
+.cell{position:relative;flex:none;height:clamp(230px,42vh,420px);overflow:hidden;border-radius:3px;
+  background:#000;filter:saturate(.92) brightness(.86);transition:filter .5s var(--ez),transform .5s var(--ez)}
+.cell.w{width:clamp(360px,44vh,640px)} .cell.n{width:clamp(200px,26vh,360px)}
+.cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--op,50% 35%)}
+.cell::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 45%,color-mix(in srgb, var(--scrim) 84%, transparent));opacity:.7;transition:opacity .5s}
+.cell:hover{filter:saturate(1.08) brightness(1.05);transform:translateY(-4px)}
+.cell:hover::after{opacity:.4}
+.cell .lab{position:absolute;left:14px;right:14px;bottom:12px;z-index:2}
+.cell .lab b{display:block;font-family:var(--disp);text-transform:uppercase;letter-spacing:.01em;
+  font-size:clamp(13px,1.3vw,16px);line-height:1.02;color:var(--onimg)}
+.cell .lab i{font-style:normal;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--onimg2)}
+
+/* ============ THE BILL / GRID ============ */
+main{padding:clamp(56px,8vh,110px) 0 0}
+.hd{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  padding-bottom:clamp(22px,3.5vh,40px);border-bottom:2px solid var(--blue-ink)}
+.hd h2{font-family:var(--disp);text-transform:uppercase;letter-spacing:.01em;line-height:.92;
+  font-size:clamp(40px,8vw,120px)}
+.hd h2 em{font-style:normal;color:var(--blue-ink)}
+.hd p{max-width:34ch;color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(30px,4vw,58px) clamp(18px,2.2vw,34px);
+  padding:clamp(40px,6vh,72px) 0 0}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+/* mobile top-bar + intro fit: role repeats in the footer, so drop it here to
+   keep the name and Contact (both Anton) on one line; stack the synopsis full-width */
+@media(max-width:560px){
+  .wm{display:flex;flex-direction:column;gap:2px;line-height:1.05}
+  .wm .role{margin-left:0!important}
+  .bar a.contact{font-size:18px}
+  .hd{flex-direction:column;align-items:flex-start;gap:14px}
+  .hd p{max-width:38ch}
+}
+figure{margin:0}
+.frame{position:relative;display:block;width:100%;aspect-ratio:4/5;overflow:hidden;border-radius:3px;
+  background:#000;cursor:pointer;border:0;padding:0}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--op,50% 30%);
+  filter:brightness(.9) saturate(.95);transition:transform .7s var(--ez),filter .6s var(--ez)}
+.frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--op,50% 30%);
+  opacity:0;transition:opacity .55s var(--ez)}
+.frame video.on{opacity:1}
+.frame::before{content:"";position:absolute;inset:0;z-index:2;
+  background:linear-gradient(180deg,transparent 55%,color-mix(in srgb, var(--scrim) 52%, transparent));opacity:.55;transition:opacity .5s}
+.play{position:absolute;right:12px;bottom:12px;z-index:3;display:flex;align-items:center;gap:7px;
+  padding:6px 11px;border-radius:999px;background:var(--blue-ink);color:var(--base);
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  opacity:0;transform:translateY(6px);transition:.4s var(--ez)}
+figcaption{padding:14px 2px 0}
+.ct{font-family:var(--disp);text-transform:uppercase;letter-spacing:.01em;line-height:1;
+  font-size:clamp(17px,1.5vw,22px)}
+.frame + figcaption .ct{transition:color .3s}
+/* hover affordances gated to real pointers — otherwise a phone tap sticks
+   the blue title + PLAY pill on (touch :hover persists after tap) */
+@media (hover:hover) and (pointer:fine){
+  .frame:hover img{transform:scale(1.05);filter:brightness(1.05) saturate(1.08)}
+  .frame:hover::before{opacity:.25}
+  .frame:hover .play{opacity:1;transform:none}
+  figure:hover .ct{color:var(--blue-ink)}
+}
+.cm{margin-top:6px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue-ink)}
+
+/* ============ FOOTER ============ */
+footer{margin-top:clamp(80px,12vh,150px);border-top:1px solid var(--line);
+  padding:clamp(44px,7vh,90px) 0 clamp(40px,6vh,72px);text-align:center}
+.f-kick{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--mut);margin-bottom:18px}
+.f-mail{font-family:var(--disp);text-transform:uppercase;font-size:clamp(30px,7vw,88px);letter-spacing:.01em;
+  line-height:1;display:inline-block;color:var(--blue-ink);transition:filter .3s}
+.f-mail:hover{filter:brightness(1.1)}
+.f-row{display:flex;justify-content:center;gap:14px;margin-top:26px;flex-wrap:wrap}
+.f-row b{font-family:var(--disp);text-transform:uppercase;font-size:15px;letter-spacing:.03em}
+.f-row span{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mut)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ez),transform .8s var(--ez)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .ticker-in,.strip-in{animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+}
+
+/* ===== TYPE SYSTEM — 3 tiers ===== */
+/* HEADS -> lowercase display (Instrument Serif) */
+.wm,.hd h2,.f-mail{text-transform:lowercase;font-weight:400}
+/* MICRO labels / subtitles / nav -> uppercase mono (DM Mono) */
+.bar a.contact,.now b,.ticker .t,.f-row b,.role{font-family:var(--sys)}
+/* CARD / STRIP TITLES -> lowercase serif (Instrument Serif, matches the heads) */
+.ct,.cell .lab b{font-family:var(--disp);font-weight:400;text-transform:lowercase;letter-spacing:0}
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <div class="bar">
+    <div class="wm">JORDAN <em>BOYD</em> <span class="role" style="margin-left:10px">Filmmaker / Director / Producer</span></div>
+    <a class="contact" href="mailto:jordan.boyd@live.com">Contact</a>
+  </div>
+</div>
+
+<div class="shell">
+  <div class="now"><b>Now Showing</b><span>Selected work</span></div>
+</div>
+<div class="strip"><div class="strip-in" id="strip"></div></div>
+
+<main class="shell">
+  <div class="hd rv">
+    <h2>FILMMAKER<br><em>PORTFOLIO</em></h2>
+    <p>Narrative, brand films, and the in-between. I tell stories about the little bits of life worth telling.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <p class="f-kick rv">Enquiries</p>
+  <a class="f-mail rv" href="mailto:jordan.boyd@live.com">jordan.boyd@live.com</a>
+  <div class="f-row rv"><b>Jordan Boyd</b><span>Filmmaker / Director / Producer</span></div>
+</footer>
+
+<script>
+/* shared reel data */
+var FILMS=[
+ {s:"chicago-il-common-hero",p:20,t:"Common's Chicago",who:"Common",op:"50% 28%",wide:1},
+ {s:"bbc-aws-miriam-full-1920x1080-final",p:20,t:"The Cloud: Revolutionizing Manufacturing",who:"",client:"AWS",op:"50% 50%"},
+ {s:"bbc-helen-el-paso-digital-final",p:20,t:"El Paso, Texas — Where the Desert Meets the Stage",who:"Helen Hunt",op:"50% 30%"},
+ {s:"new-orleans-la-jordana-spiro-hero",p:20,t:"The Artistic New Orleans, Louisiana",who:"Jordana Spiro",op:"33% 35%"},
+ {s:"bbc-aws-tl-feathersnap-final",p:55,t:"The Art of the Possible: Generative AI",who:"",client:"AWS",op:"55% 38%",wide:1},
+ {s:"little-rock-ar-mary-steenburgen-hero",p:20,t:"Quaint Little Rock, Arkansas",who:"Mary Steenburgen",op:"63% 30%"},
+ {s:"bbc-aws-tl-druva-final",p:55,t:"The Art of Possible: Unlocking Innovation",who:"",client:"AWS",op:"50% 28%"},
+ {s:"bbc-hilary-carmel-digital-final-1-mix",p:20,t:"The Serene Carmel-by-the-Sea",who:"Hilary Swank",op:"55% 38%",wide:1},
+ {s:"washington-dc-bradford-young",p:20,t:"The Storied Washington, DC",who:"Bradford Young",op:"65% 38%"},
+ {s:"los-angeles-ca-jane-krakowski-hero",p:20,t:"Sunlit Los Angeles, California",who:"Jane Krakowski",op:"48% 30%"},
+ {s:"bbc-sheryl-philly-digital-final-1",p:20,t:"Stately Philadelphia, Pennsylvania",who:"Sheryl Lee Ralph",op:"52% 25%"},
+ {s:"bbc-colman-santa-fe-digital-final-1",p:20,t:"Sun-Baked Santa Fe, New Mexico",who:"Colman Domingo",op:"35% 35%",wide:1},
+ {s:"bbc-aws-richard-full-1920x1080-final",p:20,t:"Why the Future of Media & Entertainment is in the Cloud",who:"",client:"AWS",op:"72% 28%"},
+ {s:"baltimore-md-aidan-gillen-hero",p:20,t:"A Port City on the Sea: Baltimore, Maryland",who:"Aidan Gillen",op:"52% 35%"},
+ {s:"new-york-city-yaya-dacosta-hero",p:70,t:"The Bustling New York City",who:"YaYa DaCosta",op:"55% 25%",wide:1},
+ {s:"bbc-niecy-st-louis-digital-final-1",p:20,t:"Soulful St. Louis, Missouri",who:"Niecy Nash",op:"50% 45%"},
+ {s:"hor-2min47-h264-060223",p:20,t:"Designing for a Life Well Crafted",who:"",client:"House of Rohl",op:"50% 40%"}
+];
+var A="assets/", V="assets/video/";
+function esc(x){return x.replace(/&/g,"&amp;")}
+
+/* hero filmstrip (doubled for seamless loop) */
+var sp="";
+for(var d=0;d<2;d++){FILMS.forEach(function(f){
+  sp+='<div class="cell '+(f.wide?'w':'n')+'" style="--op:'+f.op+'">'
+    +'<img src="'+A+f.s+'-'+f.p+'.jpg" alt="'+esc(f.t)+'" loading="lazy">'
+    +'<div class="lab"><b>'+esc(f.t)+'</b>'+(f.who?'<i>'+esc(f.who)+'</i>':'')+'</div></div>';
+});}
+document.getElementById("strip").innerHTML=sp;
+
+/* grid */
+var g="";
+FILMS.forEach(function(f){
+  var brand=f.who?'':' brand';
+  var meta=f.who?f.who:('Brand film'+(f.client?' | '+f.client:''));
+  g+='<figure class="rv">'
+    +'<button class="frame" data-loop="'+V+f.s+'-loop.mp4" style="--op:'+f.op+'">'
+    +'<img src="'+A+f.s+'-'+f.p+'.jpg" alt="'+esc(f.t)+'" loading="lazy">'
+    +'<span class="play">▶ Play</span></button>'
+    +'<figcaption><div class="ct">'+esc(f.t)+'</div>'
+    +'<div class="cm'+brand+'">'+esc(meta)+'</div></figcaption></figure>';
+});
+document.getElementById("grid").innerHTML=g;
+
+/* reveal */
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.08,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+}else document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')});
+
+/* hover loops — at most one alive */
+var reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+var cur=null;
+if(fine&&!reduced){
+  document.querySelectorAll('.frame').forEach(function(fr){
+    var v=null;
+    fr.addEventListener('mouseenter',function(){
+      if(cur&&cur!==v){cur.classList.remove('on');try{cur.pause()}catch(e){}}
+      if(!v){v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;
+        v.src=fr.dataset.loop;v.style.cssText='';fr.appendChild(v);
+        v.className='';v.setAttribute('playsinline','');v.classList.add('fv');
+        v.style.position='absolute';v.style.inset=0;v.style.width='100%';v.style.height='100%';
+        v.style.objectFit='cover';v.style.objectPosition=fr.style.getPropertyValue('--op');
+        v.style.opacity=0;v.style.transition='opacity .55s cubic-bezier(.22,.61,.36,1)';
+        v.addEventListener('error',function(){v.remove()});}
+      cur=v;v.classList.add('on');v.style.opacity=1;var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
+    });
+    fr.addEventListener('mouseleave',function(){if(v){v.style.opacity=0;try{v.pause()}catch(e){}}});
+  });
+}
+</script>
+</body>
+</html>
