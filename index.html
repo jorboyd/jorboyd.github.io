@@ -172,6 +172,32 @@ footer{margin-top:clamp(80px,12vh,150px);border-top:1px solid var(--line);
 .bar a.contact,.now b,.ticker .t,.f-row b,.role{font-family:var(--sys)}
 /* CARD / STRIP TITLES -> lowercase serif (Instrument Serif, matches the heads) */
 .ct,.cell .lab b{font-family:var(--disp);font-weight:400;text-transform:lowercase;letter-spacing:0}
+
+/* ============ SCREENING ROOM ============ */
+/* click a card -> the gallery dims and the film plays full-frame */
+.lb{position:fixed;inset:0;z-index:50;display:grid;place-items:center;
+  padding:clamp(16px,4vw,56px);
+  background:color-mix(in srgb, var(--scrim) 94%, transparent);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;visibility:hidden;transition:opacity .45s var(--ez),visibility .45s var(--ez)}
+.lb.open{opacity:1;visibility:visible}
+.lb-in{width:min(1180px,100%);transform:translateY(14px) scale(.985);transition:transform .5s var(--ez)}
+.lb.open .lb-in{transform:none}
+.lb video{width:100%;aspect-ratio:16/9;display:block;background:#000;border-radius:3px;
+  box-shadow:0 40px 90px rgba(0,0,0,.45)}
+.lb-cap{display:flex;justify-content:space-between;align-items:baseline;gap:22px;
+  flex-wrap:wrap;margin-top:16px}
+.lb-t{font-family:var(--disp);text-transform:lowercase;font-weight:400;line-height:1;
+  font-size:clamp(20px,2.4vw,32px);color:var(--onimg)}
+.lb-m{font-family:var(--sys);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--onimg2)}
+.lb-x{position:absolute;top:clamp(12px,2.5vw,26px);right:clamp(12px,2.5vw,26px);
+  width:42px;height:42px;border:0;border-radius:999px;cursor:pointer;line-height:1;font-size:19px;
+  background:color-mix(in srgb, var(--onimg) 12%, transparent);color:var(--onimg);
+  transition:background .3s var(--ez)}
+.lb-x:hover{background:color-mix(in srgb, var(--onimg) 26%, transparent)}
+body.lb-lock{overflow:hidden}
+/* PLAY is actionable now, so surface it on touch devices too (no hover there) */
+@media (hover:none),(pointer:coarse){.play{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -201,6 +227,15 @@ footer{margin-top:clamp(80px,12vh,150px);border-top:1px solid var(--line);
   <a class="f-mail rv" href="mailto:jordan.boyd@live.com">jordan.boyd@live.com</a>
   <div class="f-row rv"><b>Jordan Boyd</b><span>Filmmaker / Director / Producer</span></div>
 </footer>
+
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Screening room" aria-hidden="true">
+  <button class="lb-x" id="lbx" aria-label="Close">&#10005;</button>
+  <div class="lb-in">
+    <video id="lbv" controls playsinline preload="metadata"></video>
+    <div class="lb-cap"><div class="lb-t" id="lbt"></div><div class="lb-m" id="lbm"></div></div>
+  </div>
+</div>
 
 <script>
 /* shared reel data */
@@ -277,6 +312,37 @@ if(fine&&!reduced){
     fr.addEventListener('mouseleave',function(){if(v){v.style.opacity=0;try{v.pause()}catch(e){}}});
   });
 }
+
+/* ---- screening room ----------------------------------------------------
+   Source swap point: to move to Vimeo/YouTube later, change srcFor() to
+   return the embed URL and render an iframe instead of <video>.          */
+function srcFor(f){return V+f.s+'-proxy.mp4';}
+function metaFor(f){return f.who?f.who:('Brand film'+(f.client?' | '+f.client:''));}
+var lb=document.getElementById('lb'),lbv=document.getElementById('lbv'),
+    lbt=document.getElementById('lbt'),lbm=document.getElementById('lbm'),
+    lbx=document.getElementById('lbx'),lastFocus=null;
+function openLB(f){
+  lastFocus=document.activeElement;
+  if(cur){try{cur.pause()}catch(e){}cur.classList.remove('on');cur.style.opacity=0;cur=null;}
+  lbt.textContent=f.t; lbm.textContent=metaFor(f); lbv.src=srcFor(f);
+  lb.classList.add('open'); lb.setAttribute('aria-hidden','false');
+  document.body.classList.add('lb-lock'); lbx.focus();
+  var pr=lbv.play(); if(pr&&pr.catch)pr.catch(function(){});
+}
+function closeLB(){
+  if(!lb.classList.contains('open'))return;
+  lb.classList.remove('open'); lb.setAttribute('aria-hidden','true');
+  document.body.classList.remove('lb-lock');
+  try{lbv.pause()}catch(e){}
+  lbv.removeAttribute('src'); lbv.load();          /* stop background buffering */
+  if(lastFocus){try{lastFocus.focus()}catch(e){}}
+}
+document.querySelectorAll('#grid .frame').forEach(function(fr,i){
+  fr.addEventListener('click',function(){openLB(FILMS[i])});
+});
+lbx.addEventListener('click',closeLB);
+lb.addEventListener('click',function(e){if(e.target===lb)closeLB()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB()});
 </script>
 </body>
 </html>
