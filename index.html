@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
 <title>Jordan Boyd — Filmmaker / Director / Producer</title>
 <meta name="description" content="Jordan Boyd — filmmaker, director, producer. Selected work.">
 <meta name="theme-color" content="#F5EFE6">
@@ -29,6 +30,7 @@
    for type, rules, bulbs & fills. Purest: base + ink + blue.
    ===================================================================== */
 :root{
+  color-scheme:only light;   /* opt out of browser auto-dark: this design is light by intent */
   --base:#F5EFE6; --panel:#EBE0CF;
   --ink:#2B2723; --mut:#6E6459;
   --blue:#4B9CD3; --blue-ink:#4B9CD3;
@@ -40,7 +42,7 @@
   --gutter:clamp(18px,4.5vw,72px);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;background:var(--base)}
 body{background:var(--base);color:var(--ink);font-family:var(--sys);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
