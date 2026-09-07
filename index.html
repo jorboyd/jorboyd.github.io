@@ -3,20 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="only light">
+<meta name="color-scheme" content="light dark">
 <title>Jordan Boyd — Filmmaker / Director / Producer</title>
 <meta name="description" content="Jordan Boyd — filmmaker, director, producer. Selected work.">
-<meta name="theme-color" content="#F5EFE6">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="canonical" href="https://jorboyd.github.io/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://jorboyd.github.io/">
-<meta property="og:title" content="Jordan Boyd — Filmmaker / Director / Producer">
-<meta property="og:description" content="Narrative, brand films, and the in-between. I tell stories about the little bits of life worth telling.">
-<meta property="og:image" content="https://jorboyd.github.io/og.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F5EFE6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16120E" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -30,7 +21,7 @@
    for type, rules, bulbs & fills. Purest: base + ink + blue.
    ===================================================================== */
 :root{
-  color-scheme:only light;   /* opt out of browser auto-dark: this design is light by intent */
+  color-scheme:light dark;   /* both schemes are authored below — browser must not invent its own */
   --base:#F5EFE6; --panel:#EBE0CF;
   --ink:#2B2723; --mut:#6E6459;
   --blue:#4B9CD3; --blue-ink:#4B9CD3;
@@ -40,6 +31,22 @@
   --sys:'DM Mono', monospace;
   --ez:cubic-bezier(.22,.61,.36,1);
   --gutter:clamp(18px,4.5vw,72px);
+}
+/* ============ HOUSE LIGHTS DOWN (authored dark) ============
+   Same marquee, after the matinee: the linen ground goes to warm
+   ink-black, the bill prints in ivory, and the Carolina blue is left
+   untouched — it is the one lit thing in the room. Photos brighten
+   slightly because on a dark ground the frames are the light source. */
+@media (prefers-color-scheme: dark){
+  :root{
+    --base:#16120E; --panel:#231C15;
+    --ink:#F0E8DB;  --mut:#9C9084;
+    --line:color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+  /* vignette was a soft ink wash over linen — invert its direction */
+  body::before{background:linear-gradient(180deg,transparent 58%,rgba(0,0,0,.45))}
+  .cell{filter:saturate(.96) brightness(.95)}
+  .frame img{filter:brightness(1) saturate(1)}
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;background:var(--base)}
