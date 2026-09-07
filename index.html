@@ -86,7 +86,7 @@ main,header,footer{position:relative;z-index:1}
 
 /* ============ HERO FILMSTRIP ============ */
 .strip{overflow:hidden;padding:clamp(24px,4vh,42px) 0 8px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.strip-in{display:flex;gap:14px;width:max-content;animation:slide 60s linear infinite;will-change:transform}
+.strip-in{display:flex;gap:14px;width:max-content;animation:slide 34s linear infinite;will-change:transform}
 /* pause-on-hover only where a real pointer exists — on touch, :hover sticks
    after a tap, and the strip is tappable now, so it would freeze for good */
 @media (hover:hover) and (pointer:fine){.strip:hover .strip-in{animation-play-state:paused}}
@@ -167,8 +167,10 @@ footer{margin-top:clamp(80px,12vh,150px);border-top:1px solid var(--line);
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ez),transform .8s var(--ez)}
 .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
-  .ticker-in,.strip-in{animation:none}
+  /* the marquee is the page's one piece of intentional motion and Jordan wants
+     it running, so it is exempt; hover still pauses it. Everything else stills. */
   .rv{opacity:1;transform:none;transition:none}
+  .cell,.frame img{transition:none}
 }
 
 /* ===== TYPE SYSTEM — 3 tiers ===== */
