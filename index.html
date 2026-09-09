@@ -86,12 +86,23 @@ main,header,footer{position:relative;z-index:1}
 
 /* ============ HERO FILMSTRIP ============ */
 .strip{overflow:hidden;padding:clamp(24px,4vh,42px) 0 8px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.strip-in{display:flex;gap:14px;width:max-content;animation:slide 34s linear infinite;will-change:transform}
+/* the gutter lives on the cells, NOT as a flex gap: with gap, two sets measure
+   16w+15g, so the -50% seam lands half a gap short and snaps 7px every loop */
+.strip-in{display:flex;width:max-content;animation:slide 34s linear infinite;will-change:transform}
 /* pause-on-hover only where a real pointer exists — on touch, :hover sticks
    after a tap, and the strip is tappable now, so it would freeze for good */
 @media (hover:hover) and (pointer:fine){.strip:hover .strip-in{animation-play-state:paused}}
 @keyframes slide{to{transform:translateX(-50%)}}
-.cell{position:relative;flex:none;cursor:pointer;height:clamp(230px,42vh,420px);overflow:hidden;border-radius:3px;
+/* on touch the strip becomes a genuine scroller you can swipe, and JS drives the
+   drift with scrollLeft — momentum, axis-locking and tap-vs-drag come free from
+   the browser. touch-action stays at its default: setting pan-x here would trap
+   a vertical drag that starts on the strip. */
+@media (hover:none),(pointer:coarse){
+  .strip{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}
+  .strip::-webkit-scrollbar{display:none}
+  .strip-in{animation:none}
+}
+.cell{position:relative;flex:none;margin-right:14px;cursor:pointer;height:clamp(230px,42vh,420px);overflow:hidden;border-radius:3px;
   background:#000;filter:saturate(.92) brightness(.86);transition:filter .5s var(--ez),transform .5s var(--ez)}
 .cell.w{width:clamp(360px,44vh,640px)} .cell.n{width:clamp(200px,26vh,360px)}
 .cell img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--op,50% 35%)}
@@ -273,13 +284,57 @@ var STRIP=["hor-2min47-h264-060223","bbc-colman-santa-fe-digital-final-1",
  "little-rock-ar-mary-steenburgen-hero","bbc-aws-tl-druva-final"];
 var REEL=STRIP.map(function(s){var i=FILMS.findIndex(function(f){return f.s===s});
   if(i<0)throw new Error("strip slug not in FILMS: "+s); return i;});
+/* touch gets a spare set on each side of home, so a hard fling never reaches a
+   real edge and the loop wrap can happen later, while the strip is still */
+var TOUCH=matchMedia('(hover:none),(pointer:coarse)').matches, SETS=TOUCH?3:2;
 var sp="";
-for(var d=0;d<2;d++){REEL.forEach(function(i){var f=FILMS[i];
+for(var d=0;d<SETS;d++){REEL.forEach(function(i){var f=FILMS[i];
   sp+='<div class="cell '+(f.wide?'w':'n')+'" data-i="'+i+'" style="--op:'+f.op+'">'
     +'<img src="'+A+f.s+'-'+f.p+'.jpg" alt="'+esc(f.t)+'" loading="lazy">'
     +'<div class="lab"><b>'+esc(f.t)+'</b>'+(f.who?'<i>'+esc(f.who)+'</i>':'')+'</div></div>';
 });}
 document.getElementById("strip").innerHTML=sp;
+
+/* swipeable marquee (touch only — desktop keeps the CSS keyframe untouched).
+   The strip still drifts on its own; a finger takes it over, and it picks the
+   drift back up once you have been still for a moment. */
+if(TOUCH)(function(){
+  var box=document.querySelector('.strip'), track=document.getElementById('strip');
+  var SEC=34, RESUME=2000;            /* one set per 34s, matching desktop */
+  var one=0,speed=0,pos=0,ours=0,last=0,idle=-1e9,held=false;
+
+  function measure(){                 /* stride between a cell and its clone = one set */
+    one=track.children[REEL.length].offsetLeft-track.children[0].offsetLeft;
+    speed=one/SEC; pos=one; box.scrollLeft=pos; ours=box.scrollLeft;
+  }
+
+  box.addEventListener('scroll',function(){   /* not ours -> a finger is driving */
+    if(Math.abs(box.scrollLeft-ours)<1.5)return;
+    pos=ours=box.scrollLeft; idle=performance.now();
+  },{passive:true});
+  box.addEventListener('pointerdown',function(){held=true;idle=performance.now()},{passive:true});
+  ['pointerup','pointercancel'].forEach(function(e){
+    box.addEventListener(e,function(){held=false;idle=performance.now()},{passive:true});
+  });
+  addEventListener('resize',measure);
+
+  requestAnimationFrame(function step(t){
+    requestAnimationFrame(step);
+    var dt=t-last; last=t;
+    if(!one||dt<=0||dt>200)return;                        /* first frame / was backgrounded */
+    if(held||t-idle<RESUME)return;                        /* hands off while they browse */
+    if(document.hidden||document.body.classList.contains('lb-lock'))return;
+    if(pos<one||pos>=one*2)                               /* re-home after a swipe — the sets
+                                                             are identical, so nothing is seen */
+      pos=one+((pos-one)%one+one)%one;
+    pos+=speed*dt/1000;
+    if(pos>=one*2)pos-=one;
+    box.scrollLeft=pos; ours=box.scrollLeft;
+  });
+
+  if(document.readyState==='complete')measure();
+  else addEventListener('load',measure);
+})();
 
 /* grid */
 var g="";
